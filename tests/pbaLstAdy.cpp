@@ -100,6 +100,60 @@ void testBus() {
     }
 }
  
+void testElm(){
+    LstAdy lstAdy;
+    lstAdy.agr(4); lstAdy.agr(8); lstAdy.agr(5); lstAdy.agr(2);
+    lstAdy.elm(4);
+    string rsl1 = lstAdy.aHil();
+    if (rsl1 != "{8,5,2}") {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo eliminar, al eliminar 4" << std::endl;
+    }
+    lstAdy.elm(8);
+    string rsl2 = lstAdy.aHil();
+    if (rsl2 != "{5,2}") {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo eliminar, al eliminar 8" << std::endl;
+    }
+    lstAdy.elm(2);
+    string rsl3 = lstAdy.aHil();
+    if (rsl3 != "{5}") {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo eliminar, al eliminar 2" << std::endl;
+    }
+    lstAdy.elm(5);
+    string rsl4 = lstAdy.aHil();
+    if (rsl4 != "{}") {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo eliminar, al eliminar 5" << std::endl;
+    }
+}
+ 
+int testTotAdy(){
+    LstAdy lstAdy;
+    lstAdy.agr(4); lstAdy.agr(8); lstAdy.agr(5); lstAdy.agr(2);
+    int rsl1 = lstAdy.totAdy();
+    if (rsl1 != 4){
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando son 4" << std::endl;
+    }
+    lstAdy.elm(4);
+    int rsl2 = lstAdy.totAdy();
+    if (rsl2 != 3) {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando son 3" << std::endl;
+    }
+    lstAdy.elm(8);
+    int rsl3 = lstAdy.totAdy();
+    if (rsl3 != 2) {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando son 2" << std::endl;
+    }
+    lstAdy.elm(2);
+    int rsl4 = lstAdy.totAdy();
+    if (rsl4 != 1) {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando son 1" << std::endl;
+    }
+    lstAdy.elm(5);
+    int rsl5 = lstAdy.totAdy();
+    if (rsl5 != 0) {
+        std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando la lista esta vacia" << std::endl;
+    }
+}
+ 
 int main(int argc, char** argv) {
     std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
     std::cout << "%SUITE_STARTED%" << std::endl;
@@ -111,6 +165,14 @@ int main(int argc, char** argv) {
     std::cout << "%TEST_STARTED% testBus (newsimpletest)" << std::endl;
     testBus();
     std::cout << "%TEST_FINISHED% time=0 testBus (newsimpletest)" << std::endl;
+     
+    std::cout << "%TEST_STARTED% testElm (newsimpletest)" << std::endl;
+    testElm();
+    std::cout << "%TEST_FINISHED% time=0 testElm (newsimpletest)" << std::endl;
+     
+    std::cout << "%TEST_STARTED% testTotAdy (newsimpletest)" << std::endl;
+    testTotAdy();
+    std::cout << "%TEST_FINISHED% time=0 testTotAdy (newsimpletest)" << std::endl;
  
     std::cout << "%TEST_STARTED% testLstAdy2 (newsimpletest)" << std::endl;
     testLstAdy2();
