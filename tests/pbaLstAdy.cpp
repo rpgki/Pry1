@@ -153,6 +153,21 @@ int testTotAdy(){
         std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener total adyacencias, cuando la lista esta vacia" << std::endl;
     }
 }
+
+int* testObtAdy(){
+    LstAdy lstAdy;
+    lstAdy.agr(4); lstAdy.agr(8); lstAdy.agr(5); lstAdy.agr(2);
+    int* arrAdy;
+    arrAdy = lstAdy.obtAdy();
+    int tam = lstAdy.totAdy();
+    bool result;
+    for(int i = 0; i < tam; i++){
+	    result = lstAdy.bus(arrAdy[i]); 
+	    if (!result) {
+		  std::cout << "%TEST_FAILED% time=0 testname=testAgr (newsimpletest) message=fallo el metodo obtener arreglo de adyacencias o el metodo buscar" << std::endl;  
+	    }
+    }
+}
  
 int main(int argc, char** argv) {
     std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
@@ -173,6 +188,10 @@ int main(int argc, char** argv) {
     std::cout << "%TEST_STARTED% testTotAdy (newsimpletest)" << std::endl;
     testTotAdy();
     std::cout << "%TEST_FINISHED% time=0 testTotAdy (newsimpletest)" << std::endl;
+    
+    std::cout << "%TEST_STARTED% testObtAdy (newsimpletest)" << std::endl;
+    testObtAdy();
+    std::cout << "%TEST_FINISHED% time=0 testObtAdy (newsimpletest)" << std::endl;
  
     std::cout << "%TEST_STARTED% testLstAdy2 (newsimpletest)" << std::endl;
     testLstAdy2();

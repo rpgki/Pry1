@@ -149,18 +149,13 @@ int LstAdy::totAdy()
 }
  
 int* LstAdy::obtAdy(){
-    int arrInt[cntAdy]; //Se inicializa el arreglo de tamaño equivalente a la cantidad de adyacencias
-    int pos = 1; //Se inicializa el contador de posiciones en 1
-    int* arrp = &arrInt[0]; //Se asigna el puntero a la posición 0 del arreglo
+    int* arrp = new int[cntAdy]; //Se inicializa el arreglo de tamaño equivalente a la cantidad de adyacencias
+    int pos = 0; //Se inicializa el contador de posiciones en 0
     shared_ptr<NdoLstAdy> p = inicio; //Se crea un puntero inteligente igual a inicio
-    *arrp = p->vrtD; //Se asigna el valor de la posicion 0 el dato del nodo inicio de la lista ligada
-    while(p->sgt != nullptr){ //Mientras no termine la lista
-        arrp[pos] = p->sgt->vrtD; //Se asigna el dato del nodo siguiente al nodo apuntado a la posicion pos del arreglo
+    while(p != nullptr){ //Mientras no termine la lista
+        arrp[pos] = p->vrtD; //Se asigna el dato del nodo siguiente al nodo apuntado a la posicion pos del arreglo
         pos = pos + 1; //Se aumenta en uno la posicion
         p = p->sgt; //Se asigna el nodo siguiente a p
     }
-    /*for(int* i = &arrInt[0]; i < &arrInt[4]; i++){
-        cout << "Prueba arreglo: " << *i << endl;
-    }*/
     return arrp;
 }
