@@ -92,7 +92,37 @@ Grafo::Grafo(const Grafo& orig) {
 }
  
 Grafo::Grafo(string nArch) {
- 
+	string hilera; //se inicializa la variable que contendra las hileras del archivo
+	int cntVrt; //se guarda en esta variable la cantidad de vertices leidos en la primer linea del archivo
+	string aux; //en esta variable se guarda cada caracter de la hilera
+	int pos = 0; //contador para posicion del arreglo que contendra los nodos
+	ifstream grafo(nArch); //se lee el archivo que contiene el grafo
+	
+	if (!grafo) { // operador ! sobrecargado
+		cerr << "No se pudo abrir el archivo de entrada" << endl;
+		exit(1);
+	}
+	
+	getline(grafo, hilera); //se lee la primera linea del archivo
+	cntVrt = stoi(hilera); //se convierte la primera linea a entero
+	arrNdoVrt_ptr = new NdoVrt[cntVrt]; //se inicializa el arreglo que contendra a los vertices
+	while(getline(grafo, hilera)){ //mientras no se acaben las hileras del archivo
+		for(int i = 0; i < hilera.size()-1; i++){ //este ciclo lee todos los caracteres de la hilera
+			if(hilera[i] != ' '){
+				aux = aux + hilera[i]; //se guarda el caracter en aux
+			} else{
+				arrNdoVrt_ptr[pos].lstAdy.agr(stoi(aux));//se cambia el caracter a entero y se asigna a la lista correspondiente a cada vertice
+				//cout << "Elementos de las hileras: " << stoi(aux) << endl;
+				//cout << "Posicion del arreglo: " << pos << endl;
+				aux = "";
+			}
+		}
+		arrNdoVrt_ptr[pos].lstAdy.agr(stoi(aux));//se cambia el caracter a entero y se asigna a la lista correspondiente a cada vertice
+		//cout << "Elementos de las hileras: " << stoi(aux) << endl;
+		//cout << "Posicion del arreglo: " << pos << endl;
+		aux = "";
+		pos = pos + 1; //se aumenta el contador de posiciones para el arreglo de vertices
+	}
 }
  
 Grafo::~Grafo() {
@@ -116,11 +146,13 @@ int Grafo::obtTotVrt() const {
 }
  
 int Grafo::obtTotAdy() const {
- 
+	
 }
  
 int Grafo::obtTotAdy(int vrt) const {
- 
+	int totAdy;
+	totAdy = arrNdoVrt_ptr[vrt].lstAdy.totAdy();
+	return totAdy;
 }
  
 double Grafo::obtPrmAdy() const {

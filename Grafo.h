@@ -18,6 +18,8 @@
 #include <string>
 #include <chrono>
 #include <random>
+#include <fstream>
+#include <iostream>
 using namespace std;
  
 #include "LstAdy.h"

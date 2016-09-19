@@ -55,6 +55,11 @@ int main(int argc, char** argv)
 
 	cout << "Cantidad de adyacencias: " << a << endl;
 	cout << "Adyacencias: " << h << endl;
-
+	
+	Grafo graf("redMuyPeq.txt");
+	
+	int vrt = 9;
+	cout << "Total adyacencias en " << vrt << ": " <<graf.obtTotAdy(vrt) << endl;
+	
 	return 0;
 }
