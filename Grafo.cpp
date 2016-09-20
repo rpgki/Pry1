@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+
 /* 
  * File:   Grafo.cpp
  * Author: Carlos
  * 
  * Created on 6 de septiembre de 2016, 11:02 PM
  */
- 
+
 #include "Grafo.h"
- 
+
 Grafo::Grafo(int N, int K, double beta) {
     arrNdoVrt_ptr = new NdoVrt[N];
- 
+
     // #1: se crea la laticia regular anular
     for (int i = 0; i < N; i++) {
         // agrega adyacencias desde i+1 hasta i + K/2
@@ -34,15 +34,15 @@ Grafo::Grafo(int N, int K, double beta) {
             }
         }
     }
- 
+
     // Se construye el generador de números al azar basado en una semilla tomada
     // del reloj del sistema:    
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
     // Se cargan los dados
     std::uniform_real_distribution<double> dados_0_1(0.0, 1.0);
- 
- 
+
+
     //#2: se re-alambran las conexiones usando beta
     for (int i = 0; i < N; i++)
         for (int j = i + 1; j < N; j++) {
@@ -52,10 +52,10 @@ Grafo::Grafo(int N, int K, double beta) {
                 // se borra j de la lstAdy de i
                 arrNdoVrt_ptr[i].lstAdy.elm(j);
                 arrNdoVrt_ptr[j].lstAdy.elm(i);
- 
+
                 int* sonAdyDeI = new int[N];
                 int cntNoAdyDeI = 0;
- 
+
                 // se cuentan e identifican todos los nodos no adyacentes a i
                 for (int k = 0; k < N; k++) {
                     if (!arrNdoVrt_ptr[i].lstAdy.bus(k) && (k != i)) {
@@ -63,12 +63,12 @@ Grafo::Grafo(int N, int K, double beta) {
                         cntNoAdyDeI++;
                     } else sonAdyDeI[k] = true;
                 }
- 
+
                 // seleccionar entre todas las no-adyacencias una basándose en 
                 // la distribución uniforme
                 std::uniform_int_distribution<int> dados_0_N(0, cntNoAdyDeI - 1);
                 int posNuevaAdy = dados_0_N(generator);
- 
+
                 // se busca nueva adyacencia en el vector de no-adyacencias
                 int nuevaAdy = 0;
                 int cuentaFalse = 0;
@@ -79,21 +79,21 @@ Grafo::Grafo(int N, int K, double beta) {
                         cuentaFalse++;
                     }
                 }
- 
+
                 // se re-alambra o sustituye j por k
                 arrNdoVrt_ptr[i].lstAdy.agr(nuevaAdy);
                 arrNdoVrt_ptr[nuevaAdy].lstAdy.agr(i);
             }
         }
 }
- 
+
 Grafo::Grafo(const Grafo& orig) {
- 
+
 }
- 
+
 Grafo::Grafo(string nArch) {
 	string hilera; //se inicializa la variable que contendra las hileras del archivo
-	int cntVrt; //se guarda en esta variable la cantidad de vertices leidos en la primer linea del archivo
+	//int cntVrt; //se guarda en esta variable la cantidad de vertices leidos en la primer linea del archivo
 	string aux; //en esta variable se guarda cada caracter de la hilera
 	int pos = 0; //contador para posicion del arreglo que contendra los nodos
 	ifstream grafo(nArch); //se lee el archivo que contiene el grafo
@@ -124,81 +124,86 @@ Grafo::Grafo(string nArch) {
 		pos = pos + 1; //se aumenta el contador de posiciones para el arreglo de vertices
 	}
 }
- 
+
 Grafo::~Grafo() {
- 
+    delete[] arrNdoVrt_ptr;
+    cout << "Borrando grafo" << endl;
 }
- 
+
 bool Grafo::xstVrt(int vrt) const {
- 
+
 }
- 
+
 bool Grafo::xstAdy(int vrtO, int vrtD) const {
- 
+    bool res = false;
+    if(arrNdoVrt_ptr[vrtO].lstAdy.bus(vrtD)){
+    res = true;
+    }
+    return res;
 }
- 
+
 int* Grafo::obtAdy(int vrt) const {
- 
+    return arrNdoVrt_ptr[vrt].lstAdy.obtAdy();
 }
- 
+
 int Grafo::obtTotVrt() const {
- 
+    return cntVrt;
 }
- 
+
 int Grafo::obtTotAdy() const {
-	
+
 }
- 
+
 int Grafo::obtTotAdy(int vrt) const {
 	int totAdy;
 	totAdy = arrNdoVrt_ptr[vrt].lstAdy.totAdy();
 	return totAdy;
 }
- 
+
 double Grafo::obtPrmAdy() const {
- 
+
 }
- 
+
 Grafo::E Grafo::obtEst(int vrt) const {
- 
+
 }
- 
+
 int Grafo::obtTmpChqVrs(int vrt) const {
- 
+
 }
- 
+
 int Grafo::obtCntChqVrs(int vrt) const {
- 
+
 }
- 
+
 double Grafo::promLongCmnsCrts() const {
- 
+
 }
- 
+
 double Grafo::coeficienteAgrupamiento(int vrt) const {
- 
+
 }
- 
+
 double Grafo::coeficienteAgrupamiento() const {
-     
+    
 }
- 
+
 void Grafo::modEst(int vrt, E ne) {
- 
+
 }
- 
+
 void Grafo::modTmpChqVrs(int vrt, int nt) {
- 
+
 }
- 
+
 void Grafo::actCntChqVrs(int vrt) {
- 
+
 }
- 
+
 void Grafo::infectar(int ios) {
- 
+
 }
- 
+
 void Grafo::azarizarTmpChqVrs(int maxTmp) {
- 
+
 }
