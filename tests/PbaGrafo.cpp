@@ -39,7 +39,7 @@
 
 void testGrafo3() {
     string nArch;
-    nArch = "redPeq.txt";
+    nArch = "redGrn.txt";
     Grafo grafo(nArch);
     int* arrGrafo;
     bool result = false;

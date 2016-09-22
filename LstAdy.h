@@ -65,7 +65,7 @@ private:
         ~NdoLstAdy(){cout << "borrando: " << vrtD << endl;}; // destructor
     };
     
-    int* arrp;
+    int* arrp; //representa el vector con las adyacencias en *this
     int cntAdy; // representa la cantidad de adyacencias guardadas en *this.
     shared_ptr<NdoLstAdy> inicio; // representa el apuntador al inicio de la lista
 };

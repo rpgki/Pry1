@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
+
 /* 
  * File:   LstAdy.cpp
  * Author: Carlos
  * 
  * Created on 6 de septiembre de 2016, 11:05 PM
  */
- 
+
 #include "LstAdy.h"
- 
+
 LstAdy::LstAdy():cntAdy(0), inicio(nullptr){
 }
- 
+
 LstAdy::LstAdy(const LstAdy& orig){
     shared_ptr<NdoLstAdy> p = orig.inicio;
     if (p == nullptr){
@@ -31,11 +31,12 @@ LstAdy::LstAdy(const LstAdy& orig){
         }
     }
 }
- 
+
 LstAdy::~LstAdy() {
+    delete[] arrp; //se borra el vector que contiene las adyacencias en *this
     cout << "Borrando lista" << endl;
 }
- 
+
 void LstAdy::agr(int nady) {
     bool rsl = false;
     shared_ptr<NdoLstAdy> p = inicio;
@@ -72,7 +73,7 @@ void LstAdy::agr(int nady) {
         }
     }
 }
- 
+
 bool LstAdy::bus(int ady) {
     bool rsl = false;//rsl = resultado.
     shared_ptr<NdoLstAdy> p = inicio;
@@ -89,7 +90,7 @@ bool LstAdy::bus(int ady) {
     }
     return rsl;
 }
- 
+
 void LstAdy::elm(int ady)
 {
     bool rsl = false;
@@ -117,39 +118,40 @@ void LstAdy::elm(int ady)
             }
         }
 }
- 
+
 string LstAdy::aHil() {
     stringstream fs; // construye una instancia de flujo de salida.
     shared_ptr<NdoLstAdy> p = inicio;
     fs << '{';
-        while(p != nullptr){ 
-            fs << p -> vrtD;
-            p = p -> sgt;
-            if(p != nullptr)
-                fs << ',';
-        }
+		while(p != nullptr){ 
+			fs << p -> vrtD;
+			p = p -> sgt;
+			if(p != nullptr)
+				fs << ',';
+		}
     fs << '}';
     return fs.str();
 }
- 
+
 int LstAdy::totAdy()
 {
-    shared_ptr<NdoLstAdy> p = inicio; //Se crea una copia de inicio
-    cntAdy = 1; //Se inicializa el contador de adyacencias en 1
-    if(p == nullptr)
-        cntAdy = 0; //Si la lista esta vacia entonces el contador es igual a 0
-    else{
-        while(p != nullptr){ //Mientras se lean los elementos de la lista
-            p = p->sgt; //Acceder a los elementos de la lista
-            if(p != nullptr) //Acceder al contador solo si el nodo existe
-                cntAdy = cntAdy + 1; //Se aumenta en uno el contador de adyacencias cuando se encuentra un nodo no nulo
-        }
-    }
-    return cntAdy;
+	shared_ptr<NdoLstAdy> p = inicio; //Se crea una copia de inicio
+	cntAdy = 1; //Se inicializa el contador de adyacencias en 1
+	if(p == nullptr)
+		cntAdy = 0; //Si la lista esta vacia entonces el contador es igual a 0
+	else{
+		while(p != nullptr){ //Mientras se lean los elementos de la lista
+			p = p->sgt; //Acceder a los elementos de la lista
+			if(p != nullptr) //Acceder al contador solo si el nodo existe
+				cntAdy = cntAdy + 1; //Se aumenta en uno el contador de adyacencias cuando se encuentra un nodo no nulo
+		}
+	}
+	return cntAdy;
 }
- 
+
 int* LstAdy::obtAdy(){
-    int* arrp = new int[cntAdy]; //Se inicializa el arreglo de tamaño equivalente a la cantidad de adyacencias
+    int totAdy = LstAdy::totAdy(); //Se usa el metodo obtener adyacencias para tener el total de adyacencias
+    arrp = new int[totAdy]; //Se inicializa el arreglo de tamaño equivalente a la cantidad de adyacencias
     int pos = 0; //Se inicializa el contador de posiciones en 0
     shared_ptr<NdoLstAdy> p = inicio; //Se crea un puntero inteligente igual a inicio
     while(p != nullptr){ //Mientras no termine la lista
