@@ -56,32 +56,24 @@ int main(int argc, char** argv) {
 	cout << "Cantidad de adyacencias: " << a << endl;
 	cout << "Adyacencias: " << h << endl;
 	
-	Grafo graf("redPeq.txt");
+	Grafo graf("redMuyPeq.txt");
 	
 	int vrt = 9;
 	cout << "Total adyacencias en " << vrt << ": " <<graf.obtTotAdy(vrt) << endl;
         
         cout << "vertices: " << graf.obtTotVrt() << endl;
 
-        /*if(graf.xstAdy(5,1)){
+        if(graf.xstAdy(5,1)){
             cout << "existe" << endl;
         }else{
             cout << "no existe" << endl;
-        }*/
-	
-	int* arrGrafo;
-	bool result = false;
-	for(int i = 0; i < graf.obtTotVrt(); i++){
-		arrGrafo = graf.obtAdy(i);
-		for(int j = 0; j < graf.obtTotAdy(i); j++){
-		 result = graf.xstAdy(i,arrGrafo[j]); 
-		 if (!result) {
-			 cout << "Error en el constructor estandar" << endl;
-		 }
-		}
-	}
-	
-	cout << "Total adyacentes en vertice 5: " << graf.obtTotAdy(5) << endl;
+        }
+        
+        double x = graf.coeficienteAgrupamiento(9);
+        cout << "coefLoc: " << x << endl;
+        
+        x = graf.coeficienteAgrupamiento();
+        cout << "coefGeneral: " << x << endl;
         
 	return 0;
 }

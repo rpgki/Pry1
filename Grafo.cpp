@@ -126,7 +126,7 @@ Grafo::Grafo(string nArch) {
 }
 
 Grafo::~Grafo() {
-    delete[] arrNdoVrt_ptr;
+    delete[] arrNdoVrt_ptr; //Destructor del arreglo que contiene a los nodos en los vertices
     cout << "Borrando grafo" << endl;
 }
 
@@ -135,19 +135,19 @@ bool Grafo::xstVrt(int vrt) const {
 }
 
 bool Grafo::xstAdy(int vrtO, int vrtD) const {
-    bool res = false;
-    if(arrNdoVrt_ptr[vrtO].lstAdy.bus(vrtD)){
+    bool res = false; //se inicializa la variable resultado en falso
+    if(arrNdoVrt_ptr[vrtO].lstAdy.bus(vrtD)){ //si encuentra que existe adyacencia entre vrtO y vrtD entonces el resultado es verdadero
     res = true;
     }
     return res;
 }
 
 int* Grafo::obtAdy(int vrt) const {
-    return arrNdoVrt_ptr[vrt].lstAdy.obtAdy();
+    return arrNdoVrt_ptr[vrt].lstAdy.obtAdy(); //Retorna un arreglo con las adyacencias para vrt
 }
 
 int Grafo::obtTotVrt() const {
-    return cntVrt;
+    return cntVrt; //Retorna la cantidad de vertices en *this
 }
 
 int Grafo::obtTotAdy() const {
@@ -155,9 +155,9 @@ int Grafo::obtTotAdy() const {
 }
 
 int Grafo::obtTotAdy(int vrt) const {
-	int totAdy;
-	totAdy = arrNdoVrt_ptr[vrt].lstAdy.totAdy();
-	return totAdy;
+	int totAdy; //se crea una variable para almacenar el total de adyacencias
+	totAdy = arrNdoVrt_ptr[vrt].lstAdy.totAdy(); //se guarda el total de adyacencias para el vertice vrt
+	return totAdy; //se retorna el total de adyacencias para vrt
 }
 
 double Grafo::obtPrmAdy() const {
@@ -181,11 +181,31 @@ double Grafo::promLongCmnsCrts() const {
 }
 
 double Grafo::coeficienteAgrupamiento(int vrt) const {
-
+    double coefLoc; //se crea la variable que almacenara el coeficiente local
+    int* adyLoc = Grafo::obtAdy(vrt); //se inicializa un arreglo que contendra las adyacencias de vrt
+    double nv = 0.0; // se inicializa la variable total de arcos entre adyacencias de vrt en 0
+    int kv = arrNdoVrt_ptr[vrt].lstAdy.totAdy(); //se guarda el total de adyacencias para vrt
+    if(kv != 1){ //se calcula el coeficiente siempre y cuando haya al menos dos adyacencias
+        for(int i = 0; i < kv-1; i++){ //se lee cada elemento de la lista
+            for(int j = i+1; j < kv; j++){ //se lee el elemento siguiente a i de la lista
+                if(Grafo::xstAdy(adyLoc[i],adyLoc[j])){ //se evalua si el elemento i tiene esta conectado con algun elemento j
+                    nv++; //se aumenta el contador de conexiones   
+                }
+            }
+        }
+        coefLoc = (2*nv)/(kv*(kv-1)); //se calcula el coeficiente local
+    }
+    return coefLoc; //se retorna el valor del coeficiente para vrt
 }
 
 double Grafo::coeficienteAgrupamiento() const {
-    
+    int vertices = Grafo::obtTotVrt(); //se obtiene el total de vertices en *this
+    double res; //se crea la variable resultado que almacenara el coeficiente global
+    for(int i = 0; i < vertices; i++){ //se recorren las posiciones del arreglo que contiene a los vertices
+        res += Grafo::coeficienteAgrupamiento(i); //se suma el coeficiente local para cada vertice
+    }
+    res = res/vertices; //se calcula el promedio el cual es el coeficiente global
+    return res; //se retorna el coeficiente global
 }
 
 void Grafo::modEst(int vrt, E ne) {
