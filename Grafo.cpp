@@ -14,24 +14,13 @@
 #include "Grafo.h"
 
 Grafo::Grafo(int N, int K, double beta) {
+    cntVrt = N;
     arrNdoVrt_ptr = new NdoVrt[N];
 
-    // #1: se crea la laticia regular anular
-    for (int i = 0; i < N; i++) {
-        // agrega adyacencias desde i+1 hasta i + K/2
-        for (int j = 1; j < K / 2 + 1; j++) {
-            arrNdoVrt_ptr[i].lstAdy.agr(i + j);
-            arrNdoVrt_ptr[i + j].lstAdy.agr(i); // por ser no dirigida la red
-        }
-        // agrega adyacencias desde i-1 hasta i - K/2
-        for (int j = K / 2; j > 0; j--) {
-            if ((i - j) >= 0) {
-                arrNdoVrt_ptr[i].lstAdy.agr(i - j);
-                arrNdoVrt_ptr[i - j].lstAdy.agr(i); // por ser no dirigida la red
-            } else {
-                arrNdoVrt_ptr[i].lstAdy.agr(N - j);
-                arrNdoVrt_ptr[N - j].lstAdy.agr(i); // por ser no dirigida la red
-            }
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            if((abs(i-j)%(N - 1 -(K/2)) > 0) && ((abs(i-j)%(N - 1 -(K/2)) <= K/2)))
+                arrNdoVrt_ptr[i].lstAdy.agr(j);
         }
     }
 

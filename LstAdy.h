@@ -62,7 +62,7 @@ private:
         shared_ptr<NdoLstAdy> sgt; // representa el apuntador inteligente al siguiente nodo
         NdoLstAdy(): vrtD(0),sgt(nullptr){}; // constructor estándar
         NdoLstAdy(int nuevo):vrtD(nuevo),sgt(0){}; //constructor no estándar
-        ~NdoLstAdy(){cout << "borrando: " << vrtD << endl;}; // destructor
+        ~NdoLstAdy(){/*cout << "borrando: " << vrtD << endl;*/}; // destructor
     };
     
     int* arrp; //representa el vector con las adyacencias en *this

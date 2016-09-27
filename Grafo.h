@@ -20,6 +20,7 @@
 #include <random>
 #include <fstream>
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 #include "LstAdy.h"
