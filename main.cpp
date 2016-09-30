@@ -75,16 +75,15 @@ int main(int argc, char** argv) {
         x = graf.coeficienteAgrupamiento();
         cout << "coefGeneral: " << x << endl;
         
-        Grafo graf2(20,4,0.2);
+        Grafo graf2(100,40,0.7);
         x = graf2.coeficienteAgrupamiento(10);
         int f = graf2.obtTotAdy(10);
         cout << "coefLoc graf2: " << x << endl;
         
         x = graf2.coeficienteAgrupamiento();
         cout << "coefGeneral graf2: " << x << endl;
-        cout << "total adyacencias 10: " << f << endl;
+        cout << "total adyacencias 99: " << f << endl;
         cout << "vertices en graf2: " << graf2.obtTotVrt() << endl;
         
 	return 0;
 }
-

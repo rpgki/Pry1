@@ -158,7 +158,7 @@ Grafo::E Grafo::obtEst(int vrt) const {
 }
 
 int Grafo::obtTmpChqVrs(int vrt) const {
-
+    return arrNdoVrt_ptr[vrt].tmpChqVrs;
 }
 
 int Grafo::obtCntChqVrs(int vrt) const {
@@ -174,22 +174,26 @@ double Grafo::coeficienteAgrupamiento(int vrt) const {
     int* adyLoc = Grafo::obtAdy(vrt); //se inicializa un arreglo que contendra las adyacencias de vrt
     double nv = 0.0; // se inicializa la variable total de arcos entre adyacencias de vrt en 0
     int kv = arrNdoVrt_ptr[vrt].lstAdy.totAdy(); //se guarda el total de adyacencias para vrt
-    if(kv != 1){ //se calcula el coeficiente siempre y cuando haya al menos dos adyacencias
-        for(int i = 0; i < kv-1; i++){ //se lee cada elemento de la lista
-            for(int j = i+1; j < kv; j++){ //se lee el elemento siguiente a i de la lista
-                if(Grafo::xstAdy(adyLoc[i],adyLoc[j])){ //se evalua si el elemento i tiene esta conectado con algun elemento j
-                    nv++; //se aumenta el contador de conexiones   
+    if (kv == 0) {
+        coefLoc = 0;
+    } else {
+        if (kv != 1) { //se calcula el coeficiente siempre y cuando haya al menos dos adyacencias
+            for (int i = 0; i < kv - 1; i++) { //se lee cada elemento de la lista
+                for (int j = i + 1; j < kv; j++) { //se lee el elemento siguiente a i de la lista
+                    if (Grafo::xstAdy(adyLoc[i], adyLoc[j])) { //se evalua si el elemento i tiene esta conectado con algun elemento j
+                        nv++; //se aumenta el contador de conexiones   
+                    }
                 }
             }
+            coefLoc = (2 * nv) / (kv * (kv - 1)); //se calcula el coeficiente local
         }
-        coefLoc = (2*nv)/(kv*(kv-1)); //se calcula el coeficiente local
     }
     return coefLoc; //se retorna el valor del coeficiente para vrt
 }
 
 double Grafo::coeficienteAgrupamiento() const {
     int vertices = Grafo::obtTotVrt(); //se obtiene el total de vertices en *this
-    double res; //se crea la variable resultado que almacenara el coeficiente global
+    double res = 0; //se crea la variable resultado que almacenara el coeficiente global
     for(int i = 0; i < vertices; i++){ //se recorren las posiciones del arreglo que contiene a los vertices
         res += Grafo::coeficienteAgrupamiento(i); //se suma el coeficiente local para cada vertice
     }
@@ -202,17 +206,32 @@ void Grafo::modEst(int vrt, E ne) {
 }
 
 void Grafo::modTmpChqVrs(int vrt, int nt) {
-
+    arrNdoVrt_ptr[vrt].tmpChqVrs = nt;
 }
 
 void Grafo::actCntChqVrs(int vrt) {
-
+    arrNdoVrt_ptr[vrt].tmpChqVrs++;
 }
 
 void Grafo::infectar(int ios) {
-
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> nmAltr(0, cntVrt-1);
+    while(ios != 0){
+        int num = nmAltr(generator);
+        if(arrNdoVrt_ptr[num].std != I){
+           arrNdoVrt_ptr[num].std = I;
+           ios--;
+        }
+    }
 }
 
-void Grafo::azarizarTmpChqVrs(int maxTmp) {
-
+void Grafo::azarizarTmpChqVrs(int vcf) {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_int_distribution<int> nmAltr(1, vcf);
+    for(int i = 0; i < cntVrt; i++){
+        int num = nmAltr(generator);
+        arrNdoVrt_ptr[i].tmpChqVrs = num;
+    }
 }
