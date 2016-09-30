@@ -154,7 +154,7 @@ double Grafo::obtPrmAdy() const {
 }
 
 Grafo::E Grafo::obtEst(int vrt) const {
-
+    return arrNdoVrt_ptr[vrt].std;
 }
 
 int Grafo::obtTmpChqVrs(int vrt) const {
@@ -162,7 +162,7 @@ int Grafo::obtTmpChqVrs(int vrt) const {
 }
 
 int Grafo::obtCntChqVrs(int vrt) const {
-
+    return arrNdoVrt_ptr[vrt].cntChqVrs;
 }
 
 double Grafo::promLongCmnsCrts() const {
@@ -210,7 +210,7 @@ void Grafo::modTmpChqVrs(int vrt, int nt) {
 }
 
 void Grafo::actCntChqVrs(int vrt) {
-    arrNdoVrt_ptr[vrt].tmpChqVrs++;
+    arrNdoVrt_ptr[vrt].cntChqVrs++;
 }
 
 void Grafo::infectar(int ios) {

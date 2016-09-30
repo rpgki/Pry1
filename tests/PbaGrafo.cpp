@@ -84,7 +84,7 @@ void testActCntChqVrs() {
     grafo.modTmpChqVrs(1,5);
     grafo.actCntChqVrs(1);
     int temp = grafo.obtCntChqVrs(1);
-    if (temp != 6) {
+    if (temp != 1) {
         std::cout << "%TEST_FAILED% time=0 testname=testActCntChqVrs (newsimpletest) message=fallo el ActCntChqVrs con el vrt 1 valor 5" << std::endl;
     }
 }
@@ -143,17 +143,17 @@ int main(int argc, char** argv) {
    // testCoeficienteAgrupamiento2();
    // std::cout << "%TEST_FINISHED% time=0 testCoeficienteAgrupamiento2 (newsimpletest)" << std::endl;
     
-   // std::cout << "%TEST_STARTED% testActCntChqVrt (newsimpletest)" << std::endl;
-   // testActCntChqVrt();
-   // std::cout << "%TEST_FINISHED% time=0 testActCntChqVrt (newsimpletest)" << std::endl;
+    std::cout << "%TEST_STARTED% testActCntChqVrt (newsimpletest)" << std::endl;
+    testActCntChqVrs();
+    std::cout << "%TEST_FINISHED% time=0 testActCntChqVrt (newsimpletest)" << std::endl;
             
-   // std::cout << "%TEST_STARTED% testInfectar (newsimpletest)" << std::endl;
-   // testInfectar();
-   // std::cout << "%TEST_FINISHED% time=0 testInfectar (newsimpletest)" << std::endl;
+    std::cout << "%TEST_STARTED% testInfectar (newsimpletest)" << std::endl;
+    testInfectar();
+    std::cout << "%TEST_FINISHED% time=0 testInfectar (newsimpletest)" << std::endl;
     
-   // std::cout << "%TEST_STARTED% testAzarizarTmpChqVrs (newsimpletest)" << std::endl;
-   // testAzarizarTmpChqVrs();
-   // std::cout << "%TEST_FINISHED% time=0 testAzarizarTmpChqVrs (newsimpletest)" << std::endl;
+    std::cout << "%TEST_STARTED% testAzarizarTmpChqVrs (newsimpletest)" << std::endl;
+    testAzarizarTmpChqVrs();
+    std::cout << "%TEST_FINISHED% time=0 testAzarizarTmpChqVrs (newsimpletest)" << std::endl;
 
     std::cout << "%SUITE_FINISHED% time=0" << std::endl;
 
