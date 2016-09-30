@@ -33,7 +33,7 @@ LstAdy::LstAdy(const LstAdy& orig){
 }
 
 LstAdy::~LstAdy() {
-    delete[] arrp; //se borra el vector que contiene las adyacencias en *this
+    //delete[] arrp; //se borra el vector que contiene las adyacencias en *this
     cout << "Borrando lista" << endl;
 }
 
