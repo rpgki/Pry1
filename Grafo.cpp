@@ -14,10 +14,10 @@
 #include "Grafo.h"
 
 Grafo::Grafo(int N, int K, double beta) {
-    cntVrt = N;
-    arrNdoVrt_ptr = new NdoVrt[N];
+    cntVrt = N; //Se guarda la cantidad de vertices escogidas por el usuario
+    arrNdoVrt_ptr = new NdoVrt[N]; //Se crea el arreglo
 
-    for(int i = 0; i < N; i++){
+    for(int i = 0; i < N; i++){ //Se alambran los vértices con sus vecinos de acuerdo al parámetro K
         for(int j = 0; j < N; j++){
             if((abs(i-j)%(N - 1 -(K/2)) > 0) && ((abs(i-j)%(N - 1 -(K/2)) <= K/2)))
                 arrNdoVrt_ptr[i].lstAdy.agr(j);
@@ -76,8 +76,16 @@ Grafo::Grafo(int N, int K, double beta) {
         }
 }
 
-Grafo::Grafo(const Grafo& orig) {
-
+Grafo::Grafo(const Grafo& orig){
+    int tam = orig.cntVrt; //Se guarda la cantidad de vértices guardadas en *this
+    NdoVrt* copiaArr; //Se crea un puntero que para copiar el arreglo
+    copiaArr = orig.arrNdoVrt_ptr; //El arreglo guardado en *this se copia en el objeto inicializado anteriormente
+    arrNdoVrt_ptr = new NdoVrt[tam]; //Se crea un nuevo arreglo
+    for(int i = 0; i < tam ; i++){ //Se copian los elementos de la copia del arreglo
+        arrNdoVrt_ptr[i] = copiaArr[i];
+    }
+    cntVrt = tam; //Se guarda el tamaño del arreglo
+    //delete[] copiaArr;
 }
 
 Grafo::Grafo(string nArch) {
@@ -120,7 +128,10 @@ Grafo::~Grafo() {
 }
 
 bool Grafo::xstVrt(int vrt) const {
-
+    bool res = false;
+    if (vrt < cntVrt) { //Se verifica que el vertice ingresado por el usuario efectivamente exista.
+        res = true;
+    }
 }
 
 bool Grafo::xstAdy(int vrtO, int vrtD) const {
@@ -140,7 +151,11 @@ int Grafo::obtTotVrt() const {
 }
 
 int Grafo::obtTotAdy() const {
-
+    int totAdy; //Se inicializa una variable para almacenar el total de adyacentes en *this.
+    for(int i = 0; i < cntVrt; i++){ //Se recorre el arreglo para sumar la cantidad de adyacencias total
+        totAdy += arrNdoVrt_ptr[i].lstAdy.totAdy();
+    }
+    return totAdy;
 }
 
 int Grafo::obtTotAdy(int vrt) const {
@@ -150,23 +165,27 @@ int Grafo::obtTotAdy(int vrt) const {
 }
 
 double Grafo::obtPrmAdy() const {
-
+    double promAdy; //Se inicializa una variable para almacenar el promedio
+    for(int i = 0; i < cntVrt; i++){ //Se suman todas las adyacencias por vértice
+        promAdy += arrNdoVrt_ptr[i].lstAdy.totAdy();
+    }
+    promAdy = promAdy / cntVrt; //Se divide el total de adyacencias por la cantidad total de vertices
+    return promAdy;
 }
 
 Grafo::E Grafo::obtEst(int vrt) const {
-    return arrNdoVrt_ptr[vrt].std;
+    return arrNdoVrt_ptr[vrt].std; //Retorna el estado del vértice vrt
 }
 
 int Grafo::obtTmpChqVrs(int vrt) const {
-    return arrNdoVrt_ptr[vrt].tmpChqVrs;
+    return arrNdoVrt_ptr[vrt].tmpChqVrs; //Retorna el temporizador del vértice vrt
 }
 
 int Grafo::obtCntChqVrs(int vrt) const {
-    return arrNdoVrt_ptr[vrt].cntChqVrs;
+    return arrNdoVrt_ptr[vrt].cntChqVrs; //Retorna el contador del chequeo de virus del vértice vrt
 }
 
-double Grafo::promLongCmnsCrts() const {
-
+double Grafo::promLongCmnsCrts() const { // ESTE NO HAY QUE HACERLO
 }
 
 double Grafo::coeficienteAgrupamiento(int vrt) const {
@@ -202,24 +221,24 @@ double Grafo::coeficienteAgrupamiento() const {
 }
 
 void Grafo::modEst(int vrt, E ne) {
-
+    arrNdoVrt_ptr[vrt].std = ne; //Modifica el estado de vrt por el ingresado en ne
 }
 
 void Grafo::modTmpChqVrs(int vrt, int nt) {
-    arrNdoVrt_ptr[vrt].tmpChqVrs = nt;
+    arrNdoVrt_ptr[vrt].tmpChqVrs = nt; //Modifica el temporizador de vrt por el ingresado en nt
 }
 
 void Grafo::actCntChqVrs(int vrt) {
-    arrNdoVrt_ptr[vrt].cntChqVrs++;
+    arrNdoVrt_ptr[vrt].cntChqVrs++; //Aumenta en uno el contador del chequeo de virus.
 }
 
 void Grafo::infectar(int ios) {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //Se establece la semilla
     std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> nmAltr(0, cntVrt-1);
+    std::uniform_int_distribution<int> nmAltr(0, cntVrt-1); //Se genera una distribución uniforme de enteros entre 0 y la cantidad de vertices - 1
     while(ios != 0){
-        int num = nmAltr(generator);
-        if(arrNdoVrt_ptr[num].std != I){
+        int num = nmAltr(generator); //Se guarda el número generado
+        if(arrNdoVrt_ptr[num].std != I){// Se infectan aleatoriamente los nodos de acuerdo al valor ingresado en ios
            arrNdoVrt_ptr[num].std = I;
            ios--;
         }
@@ -227,11 +246,11 @@ void Grafo::infectar(int ios) {
 }
 
 void Grafo::azarizarTmpChqVrs(int vcf) {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //Se crea la semilla
     std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> nmAltr(1, vcf);
+    std::uniform_int_distribution<int> nmAltr(1, vcf); //Se genera una distribución uniforme desde 1 hasta el valor ingresado por en vcf
     for(int i = 0; i < cntVrt; i++){
-        int num = nmAltr(generator);
-        arrNdoVrt_ptr[i].tmpChqVrs = num;
+        int num = nmAltr(generator); //Se guarda el número generado
+        arrNdoVrt_ptr[i].tmpChqVrs = num; //Se asigna el número generado al temporizador del vertice i
     }
 }

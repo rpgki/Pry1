@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 	cout << "Adyacencias: " << h << endl;
 	
 	Grafo graf("redMuyPeq.txt");
-        
+	
 	int vrt = 9;
 	cout << "Total adyacencias en " << vrt << ": " <<graf.obtTotAdy(vrt) << endl;
         
@@ -84,6 +84,19 @@ int main(int argc, char** argv) {
         cout << "coefGeneral graf2: " << x << endl;
         cout << "total adyacencias 99: " << f << endl;
         cout << "vertices en graf2: " << graf2.obtTotVrt() << endl;
+
+        x = 54;
         
+        Grafo copia(graf);
+        x = copia.obtTotVrt();
+        vrt = 5;
+	cout << "Total adyacencias en graf" << ": " <<graf.obtTotVrt() << endl;
+        cout << "Total adyacencias en copia" << ": " <<copia.obtTotVrt() << endl;
+        
+        for(int i = 0; i < copia.obtTotVrt() ; i++){
+            cout << "Total adyacencias en graf" << i << ": " <<graf.obtTotAdy(i) << endl;
+            cout << "Total adyacencias en copia" << i << ": " <<copia.obtTotAdy(i) << endl;
+        }
 	return 0;
 }
+
