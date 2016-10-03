@@ -28,6 +28,12 @@ void Simulador::simular() {
     int* arrTemp;
     for (int i = 0; i < grafo.obtTotVrt(); i++) {
         arrTemp = grafo.obtAdy(i);
+        if (grafo.obtEst(i) == Grafo::S && grafo.obtTmpChqVrs(i) != 0) {
+            double prbAlt = prb(generator);
+            if (prbAlt <= resis) {
+                grafo.modEst(i, Grafo::R);
+            }
+        }
         if (grafo.obtEst(i) == Grafo::S) {
             for (int j = 0; j < grafo.obtTotAdy(i); j++) {
                 if (grafo.obtEst(arrTemp[j]) == Grafo::I) {
@@ -37,6 +43,7 @@ void Simulador::simular() {
                     }
                 }
             }
+            
         } else {
             if (grafo.obtEst(i) == Grafo::I && grafo.obtTmpChqVrs(i)== 0) {
                 double prbAlt = prb(generator);
@@ -44,16 +51,10 @@ void Simulador::simular() {
                     grafo.modEst(i, Grafo::S);
                 }
             }
-            if (grafo.obtEst(i) == Grafo::S && grafo.obtTmpChqVrs(i)!= 0) {
-                double prbAlt = prb(generator);
-                if(prbAlt <= resis){
-                    grafo.modEst(i, Grafo::R);
-                }
-            }
         }
     }
 }
-// ijdfoijgoaj;oprw
+
 void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc){
     tam = ios;
     prbInf = vsc;
