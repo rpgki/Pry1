@@ -53,7 +53,7 @@ void Simulador::simular() {
         }
     }
 }
-
+// ijdfoijgoaj;oprw
 void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc){
     tam = ios;
     prbInf = vsc;
