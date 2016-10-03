@@ -14,13 +14,50 @@
 #include "Simulador.h"
 
 Simulador::Simulador(Grafo& g):grafo(g) {
-    
 }
 
-Simulador::~Simulador() {
-    
+Simulador::~Simulador() {   
 }
 
-void Simulador::simular(int cntItr, int ios, double vsc, int mvcf, double rc, double grc) {
+void Simulador::simular() {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_real_distribution<double> prb(0.0, 1.0);
+    double prbAlt = prb(generator);
+    grafo.infectar(tam); // se infectaron
+    int* arrTemp;
+    for (int i = 0; i < grafo.obtTotVrt(); i++) {
+        arrTemp = grafo.obtAdy(i);
+        if (grafo.obtEst(i) == Grafo::S) {
+            for (int j = 0; j < grafo.obtTotAdy(i); j++) {
+                if (grafo.obtEst(arrTemp[j]) == Grafo::I) {
+                    double prbAlt = prb(generator);
+                    if (prbAlt <= prbInf) {
+                        grafo.modEst(i, Grafo::I);
+                    }
+                }
+            }
+        } else {
+            if (grafo.obtEst(i) == Grafo::I && grafo.obtTmpChqVrs(i)== 0) {
+                double prbAlt = prb(generator);
+                if(prbAlt <= rec){
+                    grafo.modEst(i, Grafo::S);
+                }
+            }
+            if (grafo.obtEst(i) == Grafo::S && grafo.obtTmpChqVrs(i)!= 0) {
+                double prbAlt = prb(generator);
+                if(prbAlt <= resis){
+                    grafo.modEst(i, Grafo::R);
+                }
+            }
+        }
+    }
+}
 
+void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc){
+    tam = ios;
+    prbInf = vsc;
+    maxFrqChqVrs = mvcf;
+    rec = rc;
+    resis = grc;
 }

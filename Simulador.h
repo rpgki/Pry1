@@ -56,6 +56,11 @@ public:
     
 private:
     Grafo& grafo;
+    int tam;
+    double prbInf;
+    int maxFrqChqVrs;
+    double rec;
+    double resis;
 };
 
 #endif	/* SIMULADOR_H */
