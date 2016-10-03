@@ -32,6 +32,17 @@ public:
     
     // REQ: el grafo asociado (el pasado al constructor) esté bien construido.
     // MOD: el grafo asociado.
+    //      Aplica la siguiente regla de cambio de estado para los vértices:
+    //      1. un vértice sólo puede ser infectado por alguno de sus vecinos infectados
+    //         con probabilidad vsc.
+    //      2. sólo un vértice infectado cuyo temporizador de chequeo de virus está en cero
+    //         puede recuperarse con probabilidad rc.
+    //      3. sólo un vértice recuperado puede ganar resistencia con probabilidad grc.
+    //      4. Sólo las transformaciones #2 y #3 pueden ser simultáneas.
+    void simular();
+    
+    // REQ: el grafo asociado (el pasado al constructor) esté bien construido.
+    // MOD: el grafo asociado.
     // EFE: aplica al grafo asociado cntItr transformaciones con base en los 
     //      siguientes parámetros:
     //      cItr > 1000: cantidad de iteraciones.
@@ -41,14 +52,7 @@ public:
     //      mvcf o virus-check-frecuency [1..20]: máxima frecuencia de chequeo antivirus.
     //      rc o recovery-chance [0..0.1]: probabilidad de recuperación de infección.
     //      grc o gain-resistance-chance [0..1]: probabilidad de lograr resistencia.
-    //      Aplica la siguiente regla de cambio de estado para los vértices:
-    //      1. un vértice sólo puede ser infectado por alguno de sus vecinos infectados
-    //         con probabilidad vsc.
-    //      2. sólo un vértice infectado cuyo temporizador de chequeo de virus está en cero
-    //         puede recuperarse con probabilidad rc.
-    //      3. sólo un vértice recuperado puede ganar resistencia con probabilidad grc.
-    //      4. Sólo las transformaciones #2 y #3 pueden ser simultáneas.
-    void simular(int cItr, int ios, double vsc, int mvcf, double rc, double grc);
+    void iniciarSim(int ios, double vsc, int mvcf, double rc, double grc);
     
 private:
     Grafo& grafo;
