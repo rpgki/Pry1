@@ -124,7 +124,7 @@ Grafo::Grafo(string nArch) {
 
 Grafo::~Grafo() {
     delete[] arrNdoVrt_ptr; //Destructor del arreglo que contiene a los nodos en los vertices
-    cout << "Borrando grafo" << endl;
+    //cout << "Borrando grafo" << endl;
 }
 
 bool Grafo::xstVrt(int vrt) const {

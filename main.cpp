@@ -97,6 +97,36 @@ int main(int argc, char** argv) {
             cout << "Total adyacencias en graf" << i << ": " <<graf.obtTotAdy(i) << endl;
             cout << "Total adyacencias en copia" << i << ": " <<copia.obtTotAdy(i) << endl;
         }
+        
+        //Pruebas del simulador
+        Grafo mini("redMini.txt");
+        /*for(int c2 = 0; c2 < mini.obtTotVrt();c2++){
+            cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
+            cout << "Temporizador de " << c2 << " antes de simular " << mini.obtTmpChqVrs(c2) << endl;
+        }*/
+        Simulador sim(mini);
+        //sim.iniciarSim(1,0.2,10,0.2,0.2);
+        sim.simular();
+        
+        int* ady; bool res = false; bool res2 = false; bool res3;
+        for(int c = 0; c < mini.obtTotVrt();c++){
+            ady = mini.obtAdy(c);
+            if(mini.obtEst(c) == Grafo::I)
+                res = true;
+            for(int c2 = 0; c2 < mini.obtTotAdy(c); c2++){
+                if(mini.obtEst(ady[c2]) == Grafo::I)
+                    res2 = true;
+                if(mini.obtEst(ady[c2]) == Grafo::S)
+                    res3 = true;
+            }
+            cout << "Estado de " << c << " despues de simular " << mini.obtEst(c) << endl;
+            //cout << "Temporizador de " << c << " despues de simular " << mini.obtTmpChqVrs(c) << endl;
+        }
+        if(res == true && res2 == true && res3 == true)
+            cout << "Pruebas exitosas" << endl;
+        else
+            cout << "Pruebas falladas" << endl;
+        
 	return 0;
 }
 

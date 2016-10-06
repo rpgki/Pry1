@@ -54,6 +54,8 @@ public:
     //      grc o gain-resistance-chance [0..1]: probabilidad de lograr resistencia.
     void iniciarSim(int ios, double vsc, int mvcf, double rc, double grc);
     
+    void iniciarSimPba(double vsc, int mvcf, double rc, double grc);
+    
 private:
     Grafo& grafo;
     int tam;
