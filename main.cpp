@@ -100,11 +100,14 @@ int main(int argc, char** argv) {
         
         //Pruebas del simulador
         Grafo mini("redMini.txt");
-        /*for(int c2 = 0; c2 < mini.obtTotVrt();c2++){
-            cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
-            cout << "Temporizador de " << c2 << " antes de simular " << mini.obtTmpChqVrs(c2) << endl;
-        }*/
+        mini.modEst(1,Grafo::I); mini.modEst(2,Grafo::I);
+        for(int c2 = 0; c2 < mini.obtTotVrt();c2++){
+            //cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
+            //cout << "Contador de " << c2 << " antes de simular " << mini.obtCntChqVrs(c2) << endl;
+            //cout << "Temporizador de " << c2 << " antes de simular " << mini.obtTmpChqVrs(c2) << endl;
+        }
         Simulador sim(mini);
+        sim.iniciarSimPba(0.2,5,0.2,0.2);
         //sim.iniciarSim(1,0.2,10,0.2,0.2);
         sim.simular();
         
@@ -120,6 +123,7 @@ int main(int argc, char** argv) {
                     res3 = true;
             }
             cout << "Estado de " << c << " despues de simular " << mini.obtEst(c) << endl;
+            //cout << "Contador de " << c << " despues de simular " << mini.obtCntChqVrs(c) << endl;
             //cout << "Temporizador de " << c << " despues de simular " << mini.obtTmpChqVrs(c) << endl;
         }
         if(res == true && res2 == true && res3 == true)
