@@ -47,11 +47,13 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f2 \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f3
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/tests/PbaGrafo.o \
+	${TESTDIR}/tests/PbaSimulador.o \
 	${TESTDIR}/tests/pbaLstAdy.o
 
 # C Compiler Flags
@@ -118,6 +120,10 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/pbaLstAdy.o ${OBJECTFILES:%.o=%_nomain
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/PbaSimulador.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
+
 
 ${TESTDIR}/tests/PbaGrafo.o: tests/PbaGrafo.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
@@ -129,6 +135,12 @@ ${TESTDIR}/tests/pbaLstAdy.o: tests/pbaLstAdy.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/pbaLstAdy.o tests/pbaLstAdy.cpp
+
+
+${TESTDIR}/tests/PbaSimulador.o: tests/PbaSimulador.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/PbaSimulador.o tests/PbaSimulador.cpp
 
 
 ${OBJECTDIR}/Grafo_nomain.o: ${OBJECTDIR}/Grafo.o Grafo.cpp 
@@ -202,6 +214,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	then  \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

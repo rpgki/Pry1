@@ -100,36 +100,22 @@ int main(int argc, char** argv) {
         
         //Pruebas del simulador
         Grafo mini("redMini.txt");
-        mini.modEst(1,Grafo::I); mini.modEst(2,Grafo::I);
+        //mini.modEst(1,Grafo::I); mini.modEst(2,Grafo::I);
+        Simulador sim(mini);
+        //sim.iniciarSimPba(0.7,5,0.7,0.7);
+        sim.iniciarSim(1,0.2,5,0.2,0.2);
         for(int c2 = 0; c2 < mini.obtTotVrt();c2++){
-            //cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
+            cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
             //cout << "Contador de " << c2 << " antes de simular " << mini.obtCntChqVrs(c2) << endl;
             //cout << "Temporizador de " << c2 << " antes de simular " << mini.obtTmpChqVrs(c2) << endl;
         }
-        Simulador sim(mini);
-        sim.iniciarSimPba(0.2,5,0.2,0.2);
-        //sim.iniciarSim(1,0.2,10,0.2,0.2);
         sim.simular();
         
-        int* ady; bool res = false; bool res2 = false; bool res3;
         for(int c = 0; c < mini.obtTotVrt();c++){
-            ady = mini.obtAdy(c);
-            if(mini.obtEst(c) == Grafo::I)
-                res = true;
-            for(int c2 = 0; c2 < mini.obtTotAdy(c); c2++){
-                if(mini.obtEst(ady[c2]) == Grafo::I)
-                    res2 = true;
-                if(mini.obtEst(ady[c2]) == Grafo::S)
-                    res3 = true;
-            }
             cout << "Estado de " << c << " despues de simular " << mini.obtEst(c) << endl;
             //cout << "Contador de " << c << " despues de simular " << mini.obtCntChqVrs(c) << endl;
             //cout << "Temporizador de " << c << " despues de simular " << mini.obtTmpChqVrs(c) << endl;
         }
-        if(res == true && res2 == true && res3 == true)
-            cout << "Pruebas exitosas" << endl;
-        else
-            cout << "Pruebas falladas" << endl;
         
 	return 0;
 }
