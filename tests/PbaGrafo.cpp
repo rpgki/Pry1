@@ -135,9 +135,6 @@ void testCoeficienteAgrupamiento2() {
     }
 }
 
-
-
-
 void testActCntChqVrs() {
     Grafo grafo("redMuyPeq.txt");
     grafo.actCntChqVrs(1);

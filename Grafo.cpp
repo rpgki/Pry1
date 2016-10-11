@@ -182,7 +182,12 @@ int Grafo::obtTmpChqVrs(int vrt) const {
 }
 
 int Grafo::obtCntChqVrs(int vrt) const {
-    return arrNdoVrt_ptr[vrt].cntChqVrs; //Retorna el contador del chequeo de virus del vértice vrt
+    if(arrNdoVrt_ptr[vrt].cntChqVrs > arrNdoVrt_ptr[vrt].tmpChqVrs){
+        arrNdoVrt_ptr[vrt].cntChqVrs = 0;
+        return arrNdoVrt_ptr[vrt].cntChqVrs; //Retorna el contador del chequeo de virus del vértice vrt
+    } else {
+        return arrNdoVrt_ptr[vrt].cntChqVrs; //Retorna el contador del chequeo de virus del vértice vrt
+    }   
 }
 
 double Grafo::promLongCmnsCrts() const { // ESTE NO HAY QUE HACERLO

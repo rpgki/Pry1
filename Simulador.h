@@ -77,7 +77,6 @@ public:
     
 private:
     Grafo& grafoAct; // Crea un grafo por referencia del estado actual del grafo.
-    Grafo grafoAnt; // Crea un grafo para copiar los estados de los vertices del momento t.
     int tam; // Cantidad de vertices infectados al azar.
     double prbInf; // Probabilidad de infeccion
     int maxFrqChqVrs; // Numero maximo temporizador de chequeo de virus.

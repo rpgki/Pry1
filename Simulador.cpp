@@ -13,21 +13,23 @@
 
 #include "Simulador.h"
 
-Simulador::Simulador(Grafo& g):grafoAnt(g), grafoAct(g) {
+Simulador::Simulador(Grafo& g):grafoAct(g) {
 }
 
 Simulador::~Simulador() {   
 }
 
 void Simulador::simular() {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    Grafo grafoAnt(grafoAct); //Se crea una instancia de tipo grafo que crea una copia, la cual servira como base para los estados en el tiempo t.
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //Se planta la semilla.
     std::default_random_engine generator(seed);
-    std::uniform_real_distribution<double> prb(0.0, 1.0);
-    //grafoAnt.infectar(tam); // se infectaron
-    grafoAct.azarizarTmpChqVrs(maxFrqChqVrs);
-    int* arrTemp;
-    for (int i = 0; i < grafoAnt.obtTotVrt(); i++) {
-        arrTemp = grafoAnt.obtAdy(i);
+    std::uniform_real_distribution<double> prb(0.0, 1.0); //Se crea el dado.
+    int* arrTemp; //Se crea un puntero al vector de adyacentes para cada vertice
+    for (int i = 0; i < grafoAnt.obtTotVrt(); i++) { //Se recorre el arreglo de vertices
+        arrTemp = grafoAnt.obtAdy(i); //Se guarda el vector de adyacentes.
+        
+        //Si el vertice es susceptible, entonces se evalua cada uno de sus adyacentes.
+        //Si alguno infectado se genera un numero aleatorio para evaluar la probabilidad de infeccion.
         if (grafoAnt.obtEst(i) == Grafo::S) {
             for (int j = 0; j < grafoAnt.obtTotAdy(i); j++) {
                 if (grafoAnt.obtEst(arrTemp[j]) == Grafo::I) {
@@ -38,12 +40,12 @@ void Simulador::simular() {
                     }
                 }
             }
-        } else {
+        } else { //Si el vertice no es susceptible, y esta infectado se evalua la probabilidad de recuperarse.
             if (grafoAnt.obtEst(i) == Grafo::I && grafoAnt.obtCntChqVrs(i)== 0) {
                 double prbAlt = prb(generator);
                 if(prbAlt <= rec){
                     prbAlt = prb(generator);
-                    if(prbAlt <= resis){
+                    if(prbAlt <= resis){ //Si el vertice infectado se recupera, entonces se evalua la probabilidad de que se vuelva resistente al virus.
                         grafoAct.modEst(i, Grafo::R);
                     }
                     else{
@@ -55,11 +57,12 @@ void Simulador::simular() {
     }
 }
 
+//Este metodo es solo para correr las pruebas. Ver simular().
 void Simulador::simularPba() {
+    Grafo grafoAnt(grafoAct);
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
     std::uniform_real_distribution<double> prb(0.0, 1.0);
-    grafoAct.azarizarTmpChqVrs(maxFrqChqVrs);
     int* arrTemp;
     for (int i = 0; i < grafoAnt.obtTotVrt(); i++) {
         arrTemp = grafoAnt.obtAdy(i);
@@ -92,11 +95,12 @@ void Simulador::simularPba() {
 
 void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc){
     tam = ios;
-    grafoAnt.infectar(tam); grafoAct.infectar(tam);
+    grafoAct.infectar(tam); //Se infecta el grafo actual
     prbInf = vsc;
     maxFrqChqVrs = mvcf;
     rec = rc;
     resis = grc;
+    grafoAct.azarizarTmpChqVrs(maxFrqChqVrs); //Se inicializa el temporizador.
 }
 
 void Simulador::iniciarSimPba(double vsc, int mvcf, double rc, double grc) {
@@ -104,4 +108,5 @@ void Simulador::iniciarSimPba(double vsc, int mvcf, double rc, double grc) {
     maxFrqChqVrs = mvcf;
     rec = rc;
     resis = grc;
+    grafoAct.azarizarTmpChqVrs(maxFrqChqVrs); //Se inicializa el temporizador.
 }

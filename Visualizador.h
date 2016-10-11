@@ -57,6 +57,12 @@ public:
 private:
     Grafo& grafo;
     Simulador& simulador;
+    int cntItr; //Cantidad de interaciones.
+    int vrtInf; // Cantidad de vertices infectados.
+    double probInf; //Probabilidad de infeccion.
+    int frecMax; //Frecuencia maxima de chequeo de virus. 
+    double probRec; //Probabilidad de recuperacion de infeccion.
+    double probRes; //Probabilidad de lograr resistencia.
 };
 
 #endif	/* VISUALIZADOR_H */

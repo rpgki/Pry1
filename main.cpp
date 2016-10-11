@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
         //mini.modEst(1,Grafo::I); mini.modEst(2,Grafo::I);
         Simulador sim(mini);
         //sim.iniciarSimPba(0.7,5,0.7,0.7);
-        sim.iniciarSim(1,0.2,5,0.2,0.2);
+        sim.iniciarSim(1,1.0,5,0.0,0.0);
         for(int c2 = 0; c2 < mini.obtTotVrt();c2++){
             cout << "Estado de " << c2 << " antes de simular " << mini.obtEst(c2) << endl;
             //cout << "Contador de " << c2 << " antes de simular " << mini.obtCntChqVrs(c2) << endl;
@@ -113,6 +113,19 @@ int main(int argc, char** argv) {
         
         for(int c = 0; c < mini.obtTotVrt();c++){
             cout << "Estado de " << c << " despues de simular " << mini.obtEst(c) << endl;
+            //cout << "Contador de " << c << " despues de simular " << mini.obtCntChqVrs(c) << endl;
+            //cout << "Temporizador de " << c << " despues de simular " << mini.obtTmpChqVrs(c) << endl;
+        }
+        
+        //Prueba Visualizador
+        Grafo mini2("redMini.txt");
+        Simulador sim2(mini2);
+        Visualizador vis(mini2,sim2);
+        vis.visualizar(100000,1,0.2,5,0.5,0.7);
+        vis.visualizar();
+        
+        for(int c = 0; c < mini2.obtTotVrt();c++){
+            cout << "Estado de " << c << " despues de vizualizar " << mini2.obtEst(c) << endl;
             //cout << "Contador de " << c << " despues de simular " << mini.obtCntChqVrs(c) << endl;
             //cout << "Temporizador de " << c << " despues de simular " << mini.obtTmpChqVrs(c) << endl;
         }

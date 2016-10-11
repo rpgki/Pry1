@@ -61,6 +61,11 @@
         <ccTool>
           <standard>8</standard>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lopengl32 -lglu32 -lfreeglut</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="Grafo.cpp" ex="false" tool="1" flavor2="0">
       </item>
