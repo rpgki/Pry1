@@ -16,24 +16,54 @@
  
 #include <iostream>
 #include <memory>
-#include <iostream>
-using namespace std;
- 
-#include "Grafo.h"
-#include "Simulador.h"
-#include "Visualizador.h"
-#include "LstAdy.h"
 #include <windows.h>
 #include <GL/glut.h>
+#include <string>
+#include "Grafo.h"
+#include "Simulador.h"
 #include "Datos.h"
+
+using namespace std;
  
+string nArch;
+int N;
+int K;
+double beta;
+int valor;
  
-Grafo g("redMuyPeq.txt");
+Grafo crearGrafo(){
+    cout << "Programa de simulacion de un virus en una red. Por favor digite 1 si desea crear una red personalizada o 2 si desea ingresar el archivo" << endl;
+    cin >> valor;
+    if(valor == 1){
+        cout << "Cantidad de vertices: " << endl;
+        cin >> N;
+        cout << "Grado de vertices promedio: " << endl;
+        cin >> K;
+        cout << "Probabilidad de adyacencia: " << endl;
+        cin >> beta;
+        return Grafo(N,K,beta);
+    } else if(valor == 2){
+        cout << "Nombre del archivo: " << endl;
+        cin >> nArch;
+        return Grafo(nArch);
+    } else{
+        cout << "Introduzca una opcion valida" << endl;
+        exit(1);
+    }
+}
+ 
+Grafo g = crearGrafo();
 Datos d(g);
 Simulador s(g);
+ 
+int tam;
+int maxFreq;
+double inf;
+double recu;
+double res;
      
 // EFE: Dibuja una línea con dos puntos cuadrados en sus extremos centrados en (xo,yo) y (xd,yd).
-void dibujarLinea(float xo, float yo, float xd, float yd, Grafo::E e){
+void dibujarLinea(float xo, float yo, float xd, float yd, Grafo::E e, Grafo g){
   glPointSize(5.8); //Ajusta el tamaño de los puntos
   if(e == Grafo::S){
   glColor3f(0.0, 0.0, 1.0); //Color blanc
@@ -51,7 +81,7 @@ void dibujarLinea(float xo, float yo, float xd, float yd, Grafo::E e){
   }
   glEnd();
   glLineWidth(1.6); //Ajusta el ancho de las lineas
-  glColor3f(0.2, 1.0, 1.0); //Color blanco
+  glColor3f(0.5, 0.5, 0.5); //Color blanco
   glBegin(GL_LINES); // dibuja una sola linea
     glVertex2f(xo, yo);
     glVertex2f(xd, yd);
@@ -66,7 +96,7 @@ void display(void) // no puede tener parámetros, por eso se usan variables glob
     for (int i = 0; i < g.obtTotVrt(); i++) {
         arrAdya = g.obtAdy(i);
         for (int j = 0; j < g.obtTotAdy(i); j++) {
-            dibujarLinea(d.obtCrdX(i), d.obtCrdY(i), d.obtCrdX(arrAdya[j]), d.obtCrdY(arrAdya[j]), d.obtEst(i));
+            dibujarLinea(d.obtCrdX(i), d.obtCrdY(i), d.obtCrdX(arrAdya[j]), d.obtCrdY(arrAdya[j]), d.obtEst(i),g);
         }
     }
     glFlush();
@@ -85,23 +115,32 @@ void keyboard(unsigned char key, int x, int y)
   }
 }
  
-void visualizar(int argc, char **argv){
-  glutInit(&argc, argv);
-  glutCreateWindow("Ejemplo glut");
-  glutKeyboardFunc(keyboard); // declara una función para capturar eventos del teclado
-  s.iniciarSim(3, 0.5, 5, 0.5, 0.5);
-  // se inicializan variables globales: xo = -0.4; yo = -0.7; xd = 0.6; yd = 0.7; delta = 0.05;
-  /*for(float i = 0.0; i <= 1.80; i += 0.2){
-    d.inicializarDatos(0.825*cos(i*3.1415)+0.1, 0.825*sin(i*3.1415), 0.825*cos(0.0*3.1415)+0.1, 0.825*sin(0.0*3.1415), 0.05);
-     
-  }*/
-   
-  glutDisplayFunc(display); // dibuja la primera imagen
-  glutMainLoop(); // otorga el control a la ventana, cuando se cierra retorna al main.    
+void visualizar(int argc, char **argv) {
+    glutInit(&argc, argv);
+    glutCreateWindow("Ejemplo glut");
+    glutKeyboardFunc(keyboard); // declara una función para capturar eventos del teclado
+    s.iniciarSim(tam, inf, maxFreq, recu, res);
+    glutDisplayFunc(display); // dibuja la primera imagen
+    glutMainLoop(); // otorga el control a la ventana, cuando se cierra retorna al main.    
 }
  
-int main(int argc, char **argv)
-{
-  visualizar(argc, argv);
-  return 0;
+int main(int argc, char **argv) {
+    cout << "Acontinuacion se va a iniciar el programa de simulacion. Por favor ingrese los parametros deseados." << endl;
+    cout << "Para propagar el virus presione la tecla espaciadora, una vez se haya abierto la ventana con la red" << endl;
+    cout << "El color rojo representa un vertice infectado." << endl;
+    cout << "El color verde representa un vertice resistente al virus." << endl;
+    cout << "El color azul representa un vertice susceptible al virus." << endl;
+    cout << "Por favor ingrese los parametros deseados: " << endl;
+    cout << "Nodos infectados: " << endl;
+    cin >> tam;
+    cout << "Probabilidad de infeccion: " << endl;
+    cin >> inf;
+    cout << "Maxima frecuencia de chequeo de virus: " << endl;
+    cin >> maxFreq;
+    cout << "Probabilidad de recuperacion: " << endl;
+    cin >> recu;
+    cout << "Probabilidad de resistencia: " << endl;
+    cin >> res;
+    visualizar(argc, argv);
+    return 0;
 }
