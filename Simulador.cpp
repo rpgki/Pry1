@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+ 
 /* 
  * File:   Simulador.cpp
  * Author: Carlos
  * 
  * Created on 6 de septiembre de 2016, 11:08 PM
  */
-
+ 
 #include "Simulador.h"
-
+ 
 Simulador::Simulador(Grafo& g):grafoAct(g) {
 }
-
+ 
 Simulador::~Simulador() {   
 }
-
+ 
 void Simulador::simular() {
     Grafo grafoAnt(grafoAct); //Se crea una instancia de tipo grafo que crea una copia, la cual servira como base para los estados en el tiempo t.
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //Se planta la semilla.
@@ -27,7 +27,7 @@ void Simulador::simular() {
     int* arrTemp; //Se crea un puntero al vector de adyacentes para cada vertice
     for (int i = 0; i < grafoAnt.obtTotVrt(); i++) { //Se recorre el arreglo de vertices
         arrTemp = grafoAnt.obtAdy(i); //Se guarda el vector de adyacentes.
-        
+        grafoAct.actCntChqVrs(i); //Se actualiza el contador de chequeo de virus
         //Si el vertice es susceptible, entonces se evalua cada uno de sus adyacentes.
         //Si alguno infectado se genera un numero aleatorio para evaluar la probabilidad de infeccion.
         if (grafoAnt.obtEst(i) == Grafo::S) {
@@ -56,7 +56,7 @@ void Simulador::simular() {
         }
     }
 }
-
+ 
 //Este metodo es solo para correr las pruebas. Ver simular().
 void Simulador::simularPba() {
     Grafo grafoAnt(grafoAct);
@@ -92,7 +92,7 @@ void Simulador::simularPba() {
         }
     }
 }
-
+ 
 void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc){
     tam = ios;
     grafoAct.infectar(tam); //Se infecta el grafo actual
@@ -102,7 +102,7 @@ void Simulador::iniciarSim(int ios, double vsc, int mvcf, double rc, double grc)
     resis = grc;
     grafoAct.azarizarTmpChqVrs(maxFrqChqVrs); //Se inicializa el temporizador.
 }
-
+ 
 void Simulador::iniciarSimPba(double vsc, int mvcf, double rc, double grc) {
     prbInf = vsc;
     maxFrqChqVrs = mvcf;

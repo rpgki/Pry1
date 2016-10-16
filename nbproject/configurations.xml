@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Datos.h</itemPath>
       <itemPath>Grafo.h</itemPath>
       <itemPath>LstAdy.h</itemPath>
       <itemPath>Simulador.h</itemPath>
@@ -16,6 +17,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Datos.cpp</itemPath>
       <itemPath>Grafo.cpp</itemPath>
       <itemPath>LstAdy.cpp</itemPath>
       <itemPath>Simulador.cpp</itemPath>
@@ -67,6 +69,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Datos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Datos.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Grafo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Grafo.h" ex="false" tool="3" flavor2="0">
@@ -158,6 +164,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Datos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Datos.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Grafo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Grafo.h" ex="false" tool="3" flavor2="0">
