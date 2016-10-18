@@ -174,7 +174,7 @@ void testAzarizarTmpChqVrs() {
 }
 
 
-int main(int argc, char** argv) {
+int main() {
     std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
     std::cout << "%SUITE_STARTED%" << std::endl;
 

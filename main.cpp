@@ -64,7 +64,7 @@ double res;
      
 // EFE: Dibuja una línea con dos puntos cuadrados en sus extremos centrados en (xo,yo) y (xd,yd).
 void dibujarLinea(float xo, float yo, float xd, float yd, Grafo::E e, Grafo g){
-  glPointSize(5.8); //Ajusta el tamaño de los puntos
+  glPointSize(9.0); //Ajusta el tamaño de los puntos
   if(e == Grafo::S){
   glColor3f(0.0, 0.0, 1.0); //Color blanc
   glBegin(GL_POINTS); // dibuja los puntos
