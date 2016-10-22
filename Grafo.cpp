@@ -36,7 +36,7 @@ Grafo::Grafo(int N, int K, double beta) {
     for (int i = 0; i < N; i++)
         for (int j = i + 1; j < N; j++) {
             // Genera un número al azar entre 0 y 1
-            int numAzar = dados_0_1(generator);
+            double numAzar = dados_0_1(generator);
             if ((arrNdoVrt_ptr[i].lstAdy.bus(j)) &&(numAzar <= beta)) { // se re-alambra
                 // se borra j de la lstAdy de i
                 arrNdoVrt_ptr[i].lstAdy.elm(j);
